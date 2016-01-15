@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserRole extends Model
 {
+    const ADMIN = 'admin';
+    const CUSTOMER = 'customer';
+
     protected $table = 'user_roles';
 
     /**

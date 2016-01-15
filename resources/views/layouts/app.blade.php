@@ -48,6 +48,14 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
+                    @if (Auth::check())
+                        @if (Auth::user()->role == \App\Models\UserRole::CUSTOMER)
+                            <li><a href="{{ route('deposit') }}">Deposit</a></li>
+                            <li><a href="{{ route('withdraw') }}">Withdraw</a></li>
+                            <li><a href="{{ route('sell') }}">Sell</a></li>
+                            <li><a href="{{ route('buy') }}">Buy</a></li>
+                        @endif
+                    @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -63,6 +71,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ route('settings') }}"><i class="fa fa-btn fa-cog"></i>Settings</a></li>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>

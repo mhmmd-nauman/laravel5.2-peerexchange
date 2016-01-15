@@ -26,6 +26,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
+    Route::get('/settings', ['as' => 'settings', 'uses' => 'SettingsController@getIndex']);
 
     Route::get('/', function() {
         if (Auth::check()) {
