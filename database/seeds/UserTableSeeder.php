@@ -22,5 +22,23 @@ class UserTableSeeder extends Seeder
                 'last_name' => 'PeerExchange',
             ]);
         }
+
+        if (User::where('email', 'user1@gmail.com')->exists() == false) {
+            User::create([
+                'email' => 'user1@gmail.com',
+                'password' => Hash::make('1234'),
+                'first_name' => 'User1',
+                'last_name' => 'PeerExchange'
+            ]);
+        }
+
+        if (User::where('email', 'user2@gmail.com')->exists() == false) {
+            User::create([
+                'email' => 'user2@gmail.com',
+                'password' => Hash::make('1234'),
+                'first_name' => 'User2',
+                'last_name' => 'PeerExchange'
+            ]);
+        }
     }
 }
