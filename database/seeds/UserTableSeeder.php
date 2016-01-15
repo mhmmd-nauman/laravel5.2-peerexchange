@@ -16,6 +16,7 @@ class UserTableSeeder extends Seeder
     {
         if (User::where('email', 'admin@gmail.com')->exists() == false) {
             User::create([
+                'role' => 'admin',
                 'email' => 'admin@gmail.com',
                 'password' => Hash::make('1234'),
                 'first_name' => 'Admin',
@@ -25,6 +26,7 @@ class UserTableSeeder extends Seeder
 
         if (User::where('email', 'user1@gmail.com')->exists() == false) {
             User::create([
+                'role' => 'customer',
                 'email' => 'user1@gmail.com',
                 'password' => Hash::make('1234'),
                 'first_name' => 'User1',
@@ -34,6 +36,7 @@ class UserTableSeeder extends Seeder
 
         if (User::where('email', 'user2@gmail.com')->exists() == false) {
             User::create([
+                'role' => 'customer',
                 'email' => 'user2@gmail.com',
                 'password' => Hash::make('1234'),
                 'first_name' => 'User2',
