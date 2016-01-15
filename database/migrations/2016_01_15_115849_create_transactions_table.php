@@ -18,9 +18,8 @@ class CreateTransactionsTable extends Migration
             $table->integer('account_id')->unsigned();
             $table->integer('type_id')->unsigned();
             $table->integer('payment_gateway_id')->unsigned();
-            $table->decimal('credit')->nullable();
-            $table->decimal('debit')->nullable();
-            $table->decimal('balance')->nullable();
+            $table->decimal('amount')->default(0);
+            $table->decimal('balance')->default(0);
             $table->timestamps();
             $table->softDeletes();
 
