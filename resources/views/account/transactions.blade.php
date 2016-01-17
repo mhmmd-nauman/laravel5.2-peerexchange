@@ -12,7 +12,7 @@
                     <div class="panel-heading">Transactions</div>
 
                     <div class="panel-body">
-                        <table class="table">
+                        <table class="table" id="transactionsTable">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -42,3 +42,12 @@
         </div>
     </div>
 @endsection
+
+@section('scripts')
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#transactionsTable').DataTable();
+    });
+</script>
+@endsection
+
