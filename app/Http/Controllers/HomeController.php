@@ -25,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $this->args['account'] = $this->user->account;
+        return view('home', $this->args);
     }
 }
