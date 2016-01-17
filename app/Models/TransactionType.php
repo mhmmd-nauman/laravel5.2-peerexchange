@@ -32,4 +32,9 @@ class TransactionType extends Model
     {
         return TransactionType::where('name', TransactionType::TYPE_DEPOSIT)->first();
     }
+
+    public static function getWithdraw()
+    {
+        return TransactionType::where('name', TransactionType::TYPE_WITHDRAW)->first();
+    }
 }

@@ -37,4 +37,30 @@ class AccountService
         });
         return $transaction;
     }
+
+    public function withdraw(Account &$account, $amount)
+    {
+        $transaction = new Transaction();
+        DB::transaction(function() use ($account, $amount, $transaction) {
+
+            if ($amount > $account->balance) {
+                throw new \Exception('Insufficient funds in account');
+            }
+
+            $account->balance = $account->balance - $amount;
+            $account->debits = $account->debits + $amount;
+            $account->save();
+
+            $type = TransactionType::getWithdraw();
+            $gateway = PaymentGateway::getSystem();
+
+            $transaction->account_id =  $account->id;
+            $transaction->type_id = $type->id;
+            $transaction->payment_gateway_id = $gateway->id;
+            $transaction->amount = $amount;
+            $transaction->balance = $account->balance;
+            $transaction->save();
+        });
+        return $transaction;
+    }
 }
