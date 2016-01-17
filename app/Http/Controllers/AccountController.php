@@ -22,6 +22,7 @@ class AccountController extends Controller
 
     public function getDeposit()
     {
+        $this->args['account'] = $this->user->account;
         return view('account.deposit', $this->args);
     }
 
@@ -45,6 +46,7 @@ class AccountController extends Controller
 
     public function getWithdraw()
     {
+        $this->args['account'] = $this->user->account;
         return view('account.withdraw', $this->args);
     }
 
