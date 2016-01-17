@@ -12,6 +12,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransactionType extends Model
 {
+    const TYPE_DEPOSIT = 'Deposit';
+    const TYPE_WITHDRAW = 'Withdraw';
+    const TYPE_SELL = 'Sell';
+    const TYPE_BUY = 'Buy';
+
     protected $table = 'transaction_types';
 
     /**
@@ -22,4 +27,9 @@ class TransactionType extends Model
     protected $fillable = [
         'name'
     ];
+
+    public static function getDeposit()
+    {
+        return TransactionType::where('name', TransactionType::TYPE_DEPOSIT)->first();
+    }
 }

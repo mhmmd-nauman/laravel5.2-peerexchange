@@ -27,7 +27,10 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/home', 'HomeController@index');
     Route::get('/settings', ['as' => 'settings', 'uses' => 'SettingsController@getIndex']);
+
     Route::get('/deposit', ['as' => 'account.deposit', 'uses' => 'AccountController@getDeposit']);
+    Route::post('/deposit', ['as' => 'account.deposit', 'uses' => 'AccountController@postDeposit']);
+
     Route::get('/withdraw', ['as' => 'account.withdraw', 'uses' => 'AccountController@getWithdraw']);
     Route::get('/but', ['as' => 'market.buy', 'uses' => 'MarketController@getBuy']);
     Route::get('/sell', ['as' => 'market.sell', 'uses' => 'MarketController@getSell']);

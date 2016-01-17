@@ -9,6 +9,9 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Http\Request;
+use App\Services\AccountService;
+
 class AccountController extends Controller
 {
     public function __construct()
@@ -19,6 +22,24 @@ class AccountController extends Controller
     public function getDeposit()
     {
         return view('account.deposit', $this->args);
+    }
+
+    public function postDeposit(Request $request, AccountService $accountService)
+    {
+        $this->validate($request, [
+            'amount' => 'required|numeric'
+        ]);
+
+        $amount = floatval($request->input('amount'));
+        $account = $this->user->account;
+        $transaction = $accountService->deposit($account, $amount);
+        if ($transaction) {
+            $request->session()->flash('message', 'Deposit Successful');
+            return redirect()->route('account.deposit');
+        } else {
+            $request->session()->flash('message', 'Deposit Failed');
+            return redirect()->back()->withInput();
+        }
     }
 
     public function getWithdraw()
