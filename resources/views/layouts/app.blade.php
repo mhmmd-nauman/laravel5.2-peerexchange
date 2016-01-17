@@ -50,6 +50,7 @@
                     <li><a href="{{ url('/home') }}">Home</a></li>
                     @if (Auth::check())
                         @if (Auth::user()->role == \App\Models\UserRole::CUSTOMER)
+                            <li><a href="{{ route('account.transactions') }}">Transactions</a></li>
                             <li><a href="{{ route('account.deposit') }}">Deposit</a></li>
                             <li><a href="{{ route('account.withdraw') }}">Withdraw</a></li>
                             <li><a href="{{ route('market.sell') }}">Sell</a></li>

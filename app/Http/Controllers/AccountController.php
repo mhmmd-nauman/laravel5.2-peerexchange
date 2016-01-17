@@ -46,4 +46,14 @@ class AccountController extends Controller
     {
         return view('account.withdraw', $this->args);
     }
+
+    public function getTransactions()
+    {
+        $account = $this->user->account;
+        $transactions = $account->transactions;
+
+        $this->args['account'] = $account;
+        $this->args['transactions'] = $transactions;
+        return view('account.transactions', $this->args);
+    }
 }

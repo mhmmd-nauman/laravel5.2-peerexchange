@@ -31,7 +31,7 @@ class Transaction extends Model
         return $this->belongsTo(TransactionType::class, 'type_id', 'id');
     }
 
-    public function paymentGateway() {
+    public function gateway() {
         return $this->belongsTo(PaymentGateway::class, 'type_id', 'id');
     }
 }
