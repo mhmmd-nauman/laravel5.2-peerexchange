@@ -8,16 +8,6 @@
     </div>
 @endif
 
-@if (Session::has('errors'))
-    <div class="alert alert-danger">
-        <ul>
-            @foreach (Session::get('errors') as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
 @if (Session::has('error'))
     <div class="alert alert-danger">
         <ul>
