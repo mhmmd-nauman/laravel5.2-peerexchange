@@ -34,7 +34,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/withdraw', ['as' => 'account.withdraw', 'uses' => 'AccountController@postWithdraw']);
     Route::get('/transactions', ['as' => 'account.transactions', 'uses' => 'AccountController@getTransactions']);
 
-    Route::get('/but', ['as' => 'market.buy', 'uses' => 'MarketController@getBuy']);
+    Route::get('/buy', ['as' => 'market.buy', 'uses' => 'MarketController@getBuy']);
     Route::get('/sell', ['as' => 'market.sell', 'uses' => 'MarketController@getSell']);
 
     Route::get('/', function() {
