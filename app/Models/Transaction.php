@@ -20,7 +20,7 @@ class Transaction extends Model
      * @var array
      */
     protected $fillable = [
-        'account_id', 'type_id', 'payment_gateway_id', 'credit', 'debit', 'balance'
+        'account_id', 'type_id', 'payment_gateway_id', 'money_sell_id', 'currency', 'credit', 'debit', 'balance'
     ];
 
     public function account() {
@@ -33,5 +33,9 @@ class Transaction extends Model
 
     public function gateway() {
         return $this->belongsTo(PaymentGateway::class, 'type_id', 'id');
+    }
+
+    public function moneySell() {
+        return $this->belongsTo(MoneySell::class, 'money_sell_id', 'id');
     }
 }

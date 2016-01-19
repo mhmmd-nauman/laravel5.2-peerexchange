@@ -17,10 +17,12 @@ class AccountTableSeeder extends Seeder
         $user1 = User::where('email', 'user1@gmail.com')->first();
         Account::create([
             'user_id' => $user1->id,
+            'currency' => 'SGD'
         ]);
         $user2 = User::where('email', 'user2@gmail.com')->first();
         Account::create([
-            'user_id' => $user2->id
+            'user_id' => $user2->id,
+            'currency' => 'MYR'
         ]);
     }
 }

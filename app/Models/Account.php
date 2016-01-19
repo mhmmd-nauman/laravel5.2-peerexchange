@@ -23,7 +23,7 @@ class Account extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'credits', 'debits', 'balance'
+        'user_id', 'currency', 'credits', 'debits', 'balance'
     ];
 
     public function user() {

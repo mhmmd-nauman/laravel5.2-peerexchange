@@ -16,6 +16,7 @@ class CreateAccountsTable extends Migration
         Schema::create('accounts', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->string('currency', 3);
             $table->decimal('credits')->default(0);
             $table->decimal('debits')->default(0);
             $table->decimal('balance')->default(0);

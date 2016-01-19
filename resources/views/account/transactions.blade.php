@@ -19,6 +19,7 @@
                                     <th>Date</th>
                                     <th>Type</th>
                                     <th>Gateway</th>
+                                    <th>Currency</th>
                                     <th>Amount</th>
                                     <th>Balance</th>
                                 </tr>
@@ -30,6 +31,7 @@
                                         <td>{{ $transaction->created_at }}</td>
                                         <td>{{ $transaction->type->name }}</td>
                                         <td>{{ $transaction->gateway->name }}</td>
+                                        <td>{{ $transaction->currency }}</td>
                                         <td>{{ $transaction->amount }}</td>
                                         <td>{{ $transaction->balance }}</td>
                                     </tr>

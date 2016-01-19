@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->integer('account_id')->unsigned();
             $table->integer('type_id')->unsigned();
             $table->integer('payment_gateway_id')->unsigned();
+            $table->string('currency', 3);
             $table->decimal('amount')->default(0);
             $table->decimal('balance')->default(0);
             $table->timestamps();

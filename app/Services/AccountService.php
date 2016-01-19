@@ -31,6 +31,7 @@ class AccountService
             $transaction->account_id =  $account->id;
             $transaction->type_id = $type->id;
             $transaction->payment_gateway_id = $gateway->id;
+            $transaction->currency = $account->currency;
             $transaction->amount = $amount;
             $transaction->balance = $account->balance;
             $transaction->save();
@@ -57,6 +58,7 @@ class AccountService
             $transaction->account_id =  $account->id;
             $transaction->type_id = $type->id;
             $transaction->payment_gateway_id = $gateway->id;
+            $transaction->currency = $account->currency;
             $transaction->amount = $amount;
             $transaction->balance = $account->balance;
             $transaction->save();
