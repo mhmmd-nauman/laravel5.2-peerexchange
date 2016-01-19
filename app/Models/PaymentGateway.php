@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class PaymentGateway extends Model
 {
     const GATEWAY_SYSTEM = 'System';
-    const GATEWAY_BANK = 'Name';
+    const GATEWAY_BANK = 'Bank';
     const GATEWAY_BRAINTREE = 'Braintree';
 
     protected $table = 'payment_gateways';

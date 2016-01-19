@@ -15,6 +15,12 @@
                         <form class="form-horizontal" action="{{ route('account.withdraw') }}" method="post">
                             <?php echo csrf_field(); ?>
                             <div class="form-group">
+                                <label for="currency" class="col-sm-2 control-label">Currency</label>
+                                <div class="col-sm-3">
+                                    <p class="form-control-static">{{ $account->currency }}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="balance" class="col-sm-2 control-label">Balance</label>
                                 <div class="col-sm-3">
                                     <p class="form-control-static">{{ $account->balance }}</p>
