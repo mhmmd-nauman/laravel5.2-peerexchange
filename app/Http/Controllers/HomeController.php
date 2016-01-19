@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,7 +26,15 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if ($this->user->role == UserRole::ADMIN) {
+            return redirect()->route('admin.dashboard');
+        }
         $this->args['account'] = $this->user->account;
-        return view('home', $this->args);
+        return view('home.dashboardUser', $this->args);
+    }
+
+    public function getAdminDashboard()
+    {
+        return view('home.dashboard', $this->args);
     }
 }

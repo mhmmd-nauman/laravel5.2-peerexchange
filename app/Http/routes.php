@@ -25,7 +25,9 @@
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
-    Route::get('/home', 'HomeController@index');
+    Route::get('/home', ['as' => 'home.dashboard', 'uses' => 'HomeController@index']);
+    Route::get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'HomeController@getAdminDashboard']);
+
     Route::get('/settings', ['as' => 'settings', 'uses' => 'SettingsController@getIndex']);
 
     Route::get('/deposit', ['as' => 'account.deposit', 'uses' => 'AccountController@getDeposit']);
