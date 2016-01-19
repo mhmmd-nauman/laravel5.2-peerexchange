@@ -32,7 +32,7 @@ class Transaction extends Model
     }
 
     public function gateway() {
-        return $this->belongsTo(PaymentGateway::class, 'type_id', 'id');
+        return $this->belongsTo(PaymentGateway::class, 'payment_gateway_id', 'id');
     }
 
     public function moneySell() {
