@@ -31,7 +31,11 @@ class Account extends Model
     }
 
     public function transactions() {
-        return $this->hasMany(Transaction::class, 'account_id');
+        return $this->hasMany(Transaction::class, 'account_id')->orderBy('created_at', 'desc');
+    }
+
+    public function moneySells() {
+        return $this->hasMany(MoneySell::class, 'account_id')->orderBy('created_at', 'desc');
     }
 
 }
