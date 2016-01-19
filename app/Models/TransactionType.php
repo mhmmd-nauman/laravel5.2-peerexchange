@@ -37,4 +37,14 @@ class TransactionType extends Model
     {
         return TransactionType::where('name', TransactionType::TYPE_WITHDRAW)->first();
     }
+
+    public static function getSell()
+    {
+        return TransactionType::where('name', TransactionType::TYPE_SELL)->first();
+    }
+
+    public static function getBuy()
+    {
+        return TransactionType::where('name', TransactionType::TYPE_BUY)->first();
+    }
 }
