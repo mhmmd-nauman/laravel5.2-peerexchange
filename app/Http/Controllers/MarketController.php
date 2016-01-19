@@ -22,7 +22,32 @@ class MarketController extends Controller
 
     public function getBuy()
     {
+        $account = $this->user->account;
+        assert($account != null, 'User with null account!');
+        $this->args['currencies'] = Currency::where('code', '<>', $account->currency)->orderBy('name')->get();
+        $this->args['account'] = $account;
+        $moneySells = MoneySell::where('account_id', '<>', $account->id)->orderBy('created_at', 'desc')->get();
+        $this->args['moneySells'] = $moneySells;
         return view('market.buy', $this->args);
+    }
+
+    public function getMakeBuy($id, Request $request, MarketService $marketService)
+    {
+        try {
+            $moneySell = MoneySell::findOrFail($id);
+            $account = $this->user->account;
+            $transaction = $marketService->buy($account, $moneySell);
+            if ($transaction) {
+                $request->session()->flash('message', 'Buy Successful');
+                return redirect()->route('market.buy');
+            } else {
+                $request->session()->flash('message', 'Buy Failed');
+                return redirect()->back()->withInput();
+            }
+        } catch (\Exception $ex) {
+            $request->session()->flash('error', 'Buy Failed: ' . $ex->getMessage());
+            return redirect()->back()->withInput();
+        }
     }
 
     public function getSell()

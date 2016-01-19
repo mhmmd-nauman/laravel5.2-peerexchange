@@ -37,6 +37,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/transactions', ['as' => 'account.transactions', 'uses' => 'AccountController@getTransactions']);
 
     Route::get('/buy', ['as' => 'market.buy', 'uses' => 'MarketController@getBuy']);
+    Route::get('/make-buy/{id}', ['as' => 'market.makeBuy', 'uses' => 'MarketController@getMakeBuy']);
+
     Route::get('/sell', ['as' => 'market.sell', 'uses' => 'MarketController@getSell']);
     Route::post('/sell', ['as' => 'market.sell', 'uses' => 'MarketController@postSell']);
 

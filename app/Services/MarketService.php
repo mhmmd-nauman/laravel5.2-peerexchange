@@ -56,4 +56,24 @@ class MarketService
         });
         return $transaction;
     }
+
+    public function buy(Account &$account, MoneySell &$moneySell)
+    {
+        $transaction = new Transaction();
+        DB::transaction(function() use ($account, $moneySell) {
+
+            if ($moneySell->to_currency != $account->currency) {
+                throw new \Exception('Incompatible currencies');
+            }
+
+            $toAmount = round($moneySell->amount * $moneySell->rate, 2);
+            if ($toAmount > $account->balance) {
+                throw new \Exception('Insufficient funds in account');
+            }
+
+            $buyerAccount = $account;
+            $sellerAccount = $moneySell->account;
+        });
+        return $transaction;
+    }
 }
