@@ -16,8 +16,8 @@ class CreateMoneySellTable extends Migration
         Schema::create('money_sell', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('account_id')->unsigned();
-            $table->string('from_currency', 2);
-            $table->string('to_currency', 2);
+            $table->string('from_currency', 3);
+            $table->string('to_currency', 3);
             $table->decimal('amount');
             $table->decimal('rate');
             $table->timestamps();
