@@ -38,6 +38,7 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/buy', ['as' => 'market.buy', 'uses' => 'MarketController@getBuy']);
     Route::get('/sell', ['as' => 'market.sell', 'uses' => 'MarketController@getSell']);
+    Route::post('/sell', ['as' => 'market.sell', 'uses' => 'MarketController@postSell']);
 
     Route::get('/', function() {
         if (Auth::check()) {
