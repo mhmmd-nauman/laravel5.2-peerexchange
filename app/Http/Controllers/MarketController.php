@@ -26,7 +26,7 @@ class MarketController extends Controller
         assert($account != null, 'User with null account!');
         $this->args['currencies'] = Currency::where('code', '<>', $account->currency)->orderBy('name')->get();
         $this->args['account'] = $account;
-        $moneySells = MoneySell::where('account_id', '<>', $account->id)->orderBy('created_at', 'desc')->get();
+        $moneySells = MoneySell::where('account_id', '<>', $account->id)->where('sold', false)->orderBy('created_at', 'desc')->get();
         $this->args['moneySells'] = $moneySells;
         return view('market.buy', $this->args);
     }
@@ -55,7 +55,7 @@ class MarketController extends Controller
         $account = $this->user->account;
         assert($account != null, 'User with null account!');
         $this->args['currencies'] = Currency::where('code', '<>', $account->currency)->orderBy('name')->get();
-        $this->args['moneySells'] = $account->moneySells;
+        $this->args['moneySells'] = $account->moneySells->where('sold', 'false');
         $this->args['account'] = $account;
         return view('market.sell', $this->args);
     }

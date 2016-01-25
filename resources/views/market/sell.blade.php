@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-md-6">
                                 @if (count($moneySells) > 0)
-                                    <h4>Current Money Sold</h4>
+                                    <h4>Current Money Being Sold</h4>
                                     <table class="table" id="moneySellsTable">
                                         <thead>
                                             <tr>

@@ -9,6 +9,7 @@
 namespace App\Services;
 
 use App\Models\Account;
+use App\Models\MoneyBuy;
 use App\Models\MoneySell;
 use App\Models\PaymentGateway;
 use App\Models\Transaction;
@@ -60,7 +61,7 @@ class MarketService
     public function buy(Account &$account, MoneySell &$moneySell)
     {
         $transaction = new Transaction();
-        DB::transaction(function() use ($account, $moneySell) {
+        DB::transaction(function() use ($account, $moneySell, $transaction) {
 
             if ($moneySell->to_currency != $account->currency) {
                 throw new \Exception('Incompatible currencies');
@@ -72,7 +73,27 @@ class MarketService
             }
 
             $buyerAccount = $account;
-            $sellerAccount = $moneySell->account;
+            $buyerAccount->balance = $buyerAccount->balance - $toAmount;
+            $buyerAccount->save();
+
+            $moneyBuy = new MoneyBuy();
+            $moneyBuy->account_id = $buyerAccount->id;
+            $moneyBuy->money_sell_id = $moneySell->id;
+            $moneyBuy->save();
+
+            $moneySell->sold = true;
+            $moneySell->save();
+
+            $type = TransactionType::getBuy();
+            $gateway = PaymentGateway::getSystem();
+            $transaction->account_id = $buyerAccount->id;
+            $transaction->type_id = $type->id;
+            $transaction->payment_gateway_id = $gateway->id;
+            $transaction->money_buy_id = $moneyBuy->id;
+            $transaction->currency = $buyerAccount->currency;
+            $transaction->amount = $toAmount;
+            $transaction->balance = $buyerAccount->balance;
+            $transaction->save();
         });
         return $transaction;
     }

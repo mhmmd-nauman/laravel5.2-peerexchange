@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\MoneyBuy;
 use Illuminate\Http\Request;
 use App\Services\AccountService;
 
@@ -46,7 +47,9 @@ class AccountController extends Controller
 
     public function getWithdraw()
     {
-        $this->args['account'] = $this->user->account;
+        $account = $this->user->account;
+        $this->args['account'] = $account;
+        $this->args['moneyBuys'] = MoneyBuy::where('account_id', $account->id)->orderBy('created_at', 'desc')->get();
         return view('account.withdraw', $this->args);
     }
 

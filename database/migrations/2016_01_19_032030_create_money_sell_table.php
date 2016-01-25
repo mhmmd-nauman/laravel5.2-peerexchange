@@ -20,6 +20,7 @@ class CreateMoneySellTable extends Migration
             $table->string('to_currency', 3);
             $table->decimal('amount');
             $table->decimal('rate');
+            $table->boolean('sold')->default(false);
             $table->timestamps();
             $table->softDeletes();
 
