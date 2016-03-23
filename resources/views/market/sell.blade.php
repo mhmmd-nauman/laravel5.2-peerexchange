@@ -20,6 +20,7 @@
                                         <label for="fromCurrency" class="col-sm-4 control-label">Balance Currency</label>
                                         <div class="col-sm-4">
                                             <p class="form-control-static">{{ $account->currency }}</p>
+                                            <input type="hidden" name="from_currency" value="{{ $account->currency }}">
                                         </div>
                                     </div>
                                     <div class="form-group">

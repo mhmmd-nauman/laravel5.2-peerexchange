@@ -34,8 +34,9 @@ class AccountController extends Controller
         ]);
 
         $amount = floatval($request->input('amount'));
-        $account = $this->user->account;
-        $transaction = $accountService->deposit($account, $amount);
+        $currency =  $request->input('currency');
+        $user_id = $this->user->id;
+        $transaction = $accountService->deposit($user_id, $amount,$currency);
         if ($transaction) {
             $request->session()->flash('message', 'Deposit Successful');
             return redirect()->route('account.deposit');
@@ -78,8 +79,18 @@ class AccountController extends Controller
 
     public function getTransactions()
     {
-        $account = $this->user->account;
-        $transactions = $account->transactions;
+        $accounts = $this->user->account;
+        //echo $user_id = $this->user->id;
+        
+        foreach($accounts as $account){
+            $transactions[] = $account->transactions;
+        }
+        //echo "<pre>";
+        //print_r($transactions);
+        //echo "</pre>";
+        //exit;
+        //$transactions = MoneyBuy::where('account_id', $account->id)->orderBy('created_at', 'desc')->get();
+        //$transactions = $account->transactions;
 
         $this->args['account'] = $account;
         $this->args['transactions'] = $transactions;

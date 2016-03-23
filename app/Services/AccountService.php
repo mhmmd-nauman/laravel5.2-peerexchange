@@ -13,16 +13,26 @@ use App\Models\PaymentGateway;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use Session;
 
 class AccountService
 {
-    public function deposit(Account &$account, $amount)
+    public function deposit($current_user, $amount,$currency="SGD")
     {
         $transaction = new Transaction();
-        DB::transaction(function() use ($account, $amount, $transaction) {
-
+        DB::transaction(function() use ($current_user, $amount, $transaction,$currency) {
+            
+            $account1 = DB::table('accounts')
+                    ->where('currency', '=', $currency)
+                    ->where('user_id', '=', $current_user)
+                    ->first();
+            //echo $account1->id;
+            $account = Account::findOrFail($account1->id);
+            //exit;
             $account->balance = $account->balance + $amount;
             $account->credits = $account->credits + $amount;
+            //$account->currency = $currency;
             $account->save();
 
             $type = TransactionType::getDeposit();

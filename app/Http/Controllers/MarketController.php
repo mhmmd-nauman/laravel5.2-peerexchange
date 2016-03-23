@@ -7,7 +7,7 @@
  */
 
 namespace App\Http\Controllers;
-
+use App\Models\Account;
 use App\Models\Currency;
 use App\Models\MoneySell;
 use App\Services\MarketService;
@@ -22,11 +22,13 @@ class MarketController extends Controller
 
     public function getBuy()
     {
-        $account = $this->user->account;
-        assert($account != null, 'User with null account!');
-        $this->args['currencies'] = Currency::where('code', '<>', $account->currency)->orderBy('name')->get();
-        $this->args['account'] = $account;
-        $moneySells = MoneySell::where('account_id', '<>', $account->id)->where('sold', false)->orderBy('created_at', 'desc')->get();
+        $accounts = $this->user->account;
+        assert($accounts != null, 'User with null account!');
+        //$this->args['currencies'] = Currency::where('code', '<>', $account->currency)->orderBy('name')->get();
+        $this->args['accounts'] = $accounts;
+        foreach($accounts as $account){
+            $moneySells = MoneySell::where('account_id', '<>', $account->id)->where('sold', false)->orderBy('created_at', 'desc')->get();
+        }
         $this->args['moneySells'] = $moneySells;
         return view('market.buy', $this->args);
     }
@@ -35,8 +37,13 @@ class MarketController extends Controller
     {
         try {
             $moneySell = MoneySell::findOrFail($id);
-            $account = $this->user->account;
-            $transaction = $marketService->buy($account, $moneySell);
+           //;
+            //echo "tt";
+            //exit;
+            //$account = $this->user->account;
+            $transaction = $marketService->buy( $this->user->id, $moneySell);
+            //echo "kk".$this->user->id;
+            //exit;
             if ($transaction) {
                 $request->session()->flash('message', 'Buy Successful');
                 return redirect()->route('market.buy');
@@ -52,14 +59,24 @@ class MarketController extends Controller
 
     public function getSell()
     {
-        $account = $this->user->account;
+        $accounts = $this->user->account;
+        assert($accounts != null, 'User with null account!');
+        //$this->args['currencies'] = Currency::where('code', '<>', $account->currency)->orderBy('name')->get();
+        //$this->args['moneySells'] = $account->moneySells->where('sold', 'false');
+        $this->args['accounts'] = $accounts;
+        return view('market.sell_currency', $this->args);
+    }
+    
+    public function getSellCurrency($id)
+    {
+        $account = Account::findOrFail($id);
         assert($account != null, 'User with null account!');
         $this->args['currencies'] = Currency::where('code', '<>', $account->currency)->orderBy('name')->get();
         $this->args['moneySells'] = $account->moneySells->where('sold', 'false');
         $this->args['account'] = $account;
         return view('market.sell', $this->args);
     }
-
+    
     public function postSell(Request $request, MarketService $marketService)
     {
         $this->validate($request, [
@@ -70,10 +87,11 @@ class MarketController extends Controller
 
         $amount = floatval($request->input('amount'));
         $currency = $request->input('toCurrency');
+        $from_currency= $request->input('from_currency');
         $rate = floatval($request->input('rate'));
 
         try {
-            $transaction = $marketService->sell($this->user->account, $currency, $amount, $rate);
+            $transaction = $marketService->sell($this->user->id, $currency, $amount, $rate,$from_currency);
             if ($transaction) {
                 $request->session()->flash('message', 'Sell Successful');
                 return redirect()->route('market.sell');

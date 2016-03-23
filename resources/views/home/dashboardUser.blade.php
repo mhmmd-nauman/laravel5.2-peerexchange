@@ -10,18 +10,31 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    @if ($account->balance > 0)
-                        <div class="jumbotron">
-                            <h3>Account Balance</h3>
-                            <h4>{{ $account->balance }}</h4>
-                            <p><a class="btn btn-primary" href="{{ route('account.transactions') }}" role="button">View Transactions</a></p>
-                        </div>
-                    @else
-                        <div class="jumbotron">
-                            <h3>Deposit Money to Get Started!</h3>
-                            <p><a class="btn btn-primary" href="{{ route('account.deposit') }}" role="button">Deposit</a></p>
-                        </div>
-                    @endif
+                    <table class="table" >
+                        <thead>
+                            <tr>
+                                <th>Currency</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        @foreach ($accounts as $currency)
+                        <tr>
+                            <td>
+                                {{$currency->currency}}
+                            </td>
+                            <td>
+                                {{$currency->balance}}
+                            </td>
+                        </tr>
+                        @endforeach
+                    </table>
+                    
+                    
+                    <div class="jumbotron">
+                        <h3>Deposit Money to Get Started!</h3>
+                        <p><a class="btn btn-primary" href="{{ route('account.deposit') }}" role="button">Deposit</a></p>
+                    </div>
+                    
                 </div>
             </div>
         </div>

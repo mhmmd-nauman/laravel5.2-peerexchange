@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Models\UserRole;
+use App\Models\Currency;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -29,7 +30,12 @@ class HomeController extends Controller
         if ($this->user->role == UserRole::ADMIN) {
             return redirect()->route('admin.dashboard');
         }
-        $this->args['account'] = $this->user->account;
+        $this->args['Currencies'] = Currency::all();
+        //print_r($this->args['Currencies']);
+        $this->args['accounts'] = $this->user->account;
+        //echo "<pre>";
+        //print_r($this->args['accounts']);
+        //echo "</pre>";
         return view('home.dashboardUser', $this->args);
     }
 

@@ -29,7 +29,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'HomeController@getAdminDashboard']);
 
     Route::get('/settings', ['as' => 'settings', 'uses' => 'SettingsController@getIndex']);
-
+    Route::post('/savesetttings', [ 'uses' => 'SettingsController@updateSetting']);
+    
     Route::get('/deposit', ['as' => 'account.deposit', 'uses' => 'AccountController@getDeposit']);
     Route::post('/deposit', ['as' => 'account.deposit', 'uses' => 'AccountController@postDeposit']);
     Route::get('/withdraw', ['as' => 'account.withdraw', 'uses' => 'AccountController@getWithdraw']);
@@ -38,8 +39,10 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/buy', ['as' => 'market.buy', 'uses' => 'MarketController@getBuy']);
     Route::get('/make-buy/{id}', ['as' => 'market.makeBuy', 'uses' => 'MarketController@getMakeBuy']);
+    Route::get('/make-hide/{id}', ['as' => 'market.makeHide', 'uses' => 'MarketController@getMakeBuy']);
 
     Route::get('/sell', ['as' => 'market.sell', 'uses' => 'MarketController@getSell']);
+    Route::get('/sell-currency/{id}', ['as' => 'market.sell', 'uses' => 'MarketController@getSellCurrency']);
     Route::post('/sell', ['as' => 'market.sell', 'uses' => 'MarketController@postSell']);
 
     Route::get('/', function() {

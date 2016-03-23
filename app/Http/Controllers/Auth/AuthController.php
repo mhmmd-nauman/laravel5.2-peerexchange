@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\Account;
+use App\Models\Currency;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -62,10 +65,40 @@ class AuthController extends Controller
      * @param  array  $data
      * @return User
      */
+    protected function register(Request $request)
+    {
+        $user=User::create([
+            'first_name' => $request->input('name'),
+            'mobile' => $request->input('mobile'),
+            'nationalid' => $request->input('nationalid'),
+            'dob' => $request->input('dob'),
+            'address' => $request->input('address'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+        ]);
+        $currencies = Currency::all();
+        foreach($currencies as $currency){
+            Account::create([
+            'user_id' => $user->id,
+            'currency' => $currency->code,
+            'credits' => 0,
+            'debits' => 0,
+            'balance' => 0,
+            
+            ]);
+        }
+        //print_r($user);
+        //exit;
+        return redirect('/home');
+    }
     protected function create(array $data)
     {
         return User::create([
             'name' => $data['name'],
+            'mobile' => $data['mobile'],
+            'nationalid' => $data['nationalid'],
+            'dob' => $data['dob'],
+            'address' => $data['address'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);

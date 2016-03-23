@@ -23,7 +23,58 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('mobile') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Mobile</label>
 
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="mobile" value="{{ old('mobile') }}">
+
+                                @if ($errors->has('mobile'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('mobile') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('nationalid') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">National ID</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="nationalid" value="{{ old('nationalid') }}">
+
+                                @if ($errors->has('nationalid'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('nationalid') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Date of Birth</label>
+
+                            <div class="col-md-6">
+                              <input type="text" class="form-control" name="dob" value="{{ old('dob') }}">
+                                        
+                                @if ($errors->has('dob'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('dob') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Address</label>
+
+                            <div class="col-md-6">
+                              <input type="text" class="form-control" name="address" value="{{ old('address') }}">
+                                        
+                                @if ($errors->has('address'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('address') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">E-Mail Address</label>
 

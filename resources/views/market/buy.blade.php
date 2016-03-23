@@ -34,7 +34,11 @@
                                         <td>
                                             <a href="{{ route('market.makeBuy', ['id' => $moneySell->id]) }}"
                                                class="btn btn-primary btn-sm">
-                                                Buy
+                                                Accept
+                                            </a>
+                                            <a href="{{ route('market.makeHide', ['id' => $moneySell->id]) }}"
+                                               class="btn btn-primary btn-sm">
+                                                Hide
                                             </a>
                                         </td>
                                     </tr>

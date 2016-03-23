@@ -22,15 +22,19 @@ class MarketService
     {
     }
 
-    public function sell(Account &$account, $currency, $amount, $rate)
+    public function sell($current_user, $currency, $amount, $rate,$from_currency)
     {
         $transaction = new Transaction();
-        DB::transaction(function() use ($account, $currency, $amount, $rate, $transaction) {
-
+        DB::transaction(function() use ($current_user, $currency, $amount, $rate, $transaction,$from_currency) {
+            $account1 = DB::table('accounts')
+                    ->where('currency', '=', $from_currency)
+                    ->where('user_id', '=', $current_user)
+                    ->first();
+            $account = Account::findOrFail($account1->id);
             if ($amount > $account->balance) {
-                throw new \Exception('Insufficient funds in account');
+                throw new \Exception('Insufficient funds in account'.$account->balance." ".$currency);
             }
-
+            
             $account->balance = $account->balance - $amount;
             $account->debits = $account->debits + $amount;
             $account->save();
@@ -58,18 +62,24 @@ class MarketService
         return $transaction;
     }
 
-    public function buy(Account &$account, MoneySell &$moneySell)
+    public function buy($current_user, MoneySell &$moneySell)
     {
+       //echo "come here".$moneySell->to_currency;
+        //    exit;
         $transaction = new Transaction();
-        DB::transaction(function() use ($account, $moneySell, $transaction) {
-
-            if ($moneySell->to_currency != $account->currency) {
-                throw new \Exception('Incompatible currencies');
-            }
+        DB::transaction(function() use ($current_user, $moneySell, $transaction) {
+           
+            $account1 = DB::table('accounts')
+                    ->where('currency', '=', $moneySell->to_currency)
+                    ->where('user_id', '=', $current_user)
+                    ->first();
+             
+            $account = Account::findOrFail($account1->id);
+            
 
             $toAmount = round($moneySell->amount * $moneySell->rate, 2);
             if ($toAmount > $account->balance) {
-                throw new \Exception('Insufficient funds in account');
+                throw new \Exception('Insufficient funds in account'.$account->balance);
             }
 
             $buyerAccount = $account;
