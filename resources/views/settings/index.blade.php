@@ -79,6 +79,7 @@
                                 @endif
                             </div>
                         </div>
+                        <!--
                         <div class="form-group{{ $errors->has('personal_bank_account') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Personal Bank Account</label>
 
@@ -144,6 +145,7 @@
                                 @endif
                             </div>
                         </div>
+                        -->
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

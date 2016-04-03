@@ -31,6 +31,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/settings', ['as' => 'settings', 'uses' => 'SettingsController@getIndex']);
     Route::post('/savesetttings', [ 'uses' => 'SettingsController@updateSetting']);
     
+    Route::get('/bankaccount', ['as' => 'account.bankaccount', 'uses' => 'AccountController@getBankAccounts']);
+    Route::post('/bankaccount', ['as' => 'account.bankaccount', 'uses' => 'AccountController@postBankAccount']);
+     
     Route::get('/deposit', ['as' => 'account.deposit', 'uses' => 'AccountController@getDeposit']);
     Route::post('/deposit', ['as' => 'account.deposit', 'uses' => 'AccountController@postDeposit']);
     Route::get('/withdraw', ['as' => 'account.withdraw', 'uses' => 'AccountController@getWithdraw']);

@@ -73,15 +73,24 @@ class MarketService
                     ->where('currency', '=', $moneySell->to_currency)
                     ->where('user_id', '=', $current_user)
                     ->first();
+            
+            $account2 = DB::table('accounts')
+                    ->where('currency', '=', $moneySell->from_currency)
+                    ->where('user_id', '=', $current_user)
+                    ->first();
              
             $account = Account::findOrFail($account1->id);
-            
+            $account3 = Account::findOrFail($account2->id);
 
             $toAmount = round($moneySell->amount * $moneySell->rate, 2);
             if ($toAmount > $account->balance) {
                 throw new \Exception('Insufficient funds in account'.$account->balance);
             }
 
+            $receiverAccount = $account3;
+            $receiverAccount->balance = $receiverAccount->balance + $moneySell->amount;
+            $receiverAccount->save();
+            
             $buyerAccount = $account;
             $buyerAccount->balance = $buyerAccount->balance - $toAmount;
             $buyerAccount->save();
@@ -90,7 +99,11 @@ class MarketService
             $moneyBuy->account_id = $buyerAccount->id;
             $moneyBuy->money_sell_id = $moneySell->id;
             $moneyBuy->save();
-
+            
+            $account4 = Account::findOrFail($moneySell->account_id);
+            $account4->balance = $buyerAccount->balance + $moneySell->amount;
+            $account4->save();
+            
             $moneySell->sold = true;
             $moneySell->save();
 

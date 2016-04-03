@@ -58,6 +58,7 @@
                             <li><a href="{{ route('account.withdraw') }}">Withdraw</a></li>
                             <li><a href="{{ route('market.sell') }}">Sell</a></li>
                             <li><a href="{{ route('market.buy') }}">Buy</a></li>
+                            <li><a href="{{ route('account.bankaccount') }}">Bank Accounts</a></li>
                         @endif
                     @endif
                 </ul>

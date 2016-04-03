@@ -7,9 +7,12 @@
  */
 
 namespace App\Http\Controllers;
+use Mail;
 use App\Models\Account;
 use App\Models\Currency;
 use App\Models\MoneySell;
+use \App\Models\MoneyBuy;
+use App\Models\User;
 use App\Services\MarketService;
 use Illuminate\Http\Request;
 
@@ -26,9 +29,12 @@ class MarketController extends Controller
         assert($accounts != null, 'User with null account!');
         //$this->args['currencies'] = Currency::where('code', '<>', $account->currency)->orderBy('name')->get();
         $this->args['accounts'] = $accounts;
+        $account_ids = array();
         foreach($accounts as $account){
-            $moneySells = MoneySell::where('account_id', '<>', $account->id)->where('sold', false)->orderBy('created_at', 'desc')->get();
+            $account_ids[]=$account->id;
         }
+        //print_r($account_ids);
+        $moneySells = MoneySell::whereNotIn('account_id', $account_ids)->where('sold', false)->orderBy('created_at', 'desc')->get();
         $this->args['moneySells'] = $moneySells;
         return view('market.buy', $this->args);
     }
@@ -62,7 +68,12 @@ class MarketController extends Controller
         $accounts = $this->user->account;
         assert($accounts != null, 'User with null account!');
         //$this->args['currencies'] = Currency::where('code', '<>', $account->currency)->orderBy('name')->get();
-        //$this->args['moneySells'] = $account->moneySells->where('sold', 'false');
+        $moneySells = array();
+        foreach($accounts as $account){
+              $moneySells[] = MoneySell::where('account_id','=', $account->id)->where('sold','=', 1)->get();
+        }
+        //print_r($buyerdata);
+        $this->args['moneySells'] = $moneySells;
         $this->args['accounts'] = $accounts;
         return view('market.sell_currency', $this->args);
     }
@@ -93,6 +104,16 @@ class MarketController extends Controller
         try {
             $transaction = $marketService->sell($this->user->id, $currency, $amount, $rate,$from_currency);
             if ($transaction) {
+                // create an email notification for buyers
+                //$user = User::findOrFail($this->user->id);
+                /*
+                Mail::send('emails.buynotifications', ['user' => $user], function ($m) use ($user) {
+                    $m->from('mhmmd.nauman@gmail.com', 'Your Application');
+
+                    $m->to($user->email, $user->name)->subject('Your Reminder!');
+                });
+                 * 
+                 */
                 $request->session()->flash('message', 'Sell Successful');
                 return redirect()->route('market.sell');
             } else {

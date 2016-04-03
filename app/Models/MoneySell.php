@@ -31,4 +31,9 @@ class MoneySell extends Model
     {
         return $this->hasOne(Transaction::class, 'money_sell_id');
     }
+    
+    public  function moneybuy(){
+         return $this->hasOne(MoneyBuy::class, 'money_sell_id')->orderBy('created_at', 'desc');
+    }
+     
 }

@@ -40,6 +40,44 @@
                             </div>
                          
                         </div>
+                        <div class="row">
+                            <h4>My Sell Transactions</h4>
+                       
+                           <table class="table" >
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Currency</th>
+                                        <th>Sold</th>
+                                        <th>To Whom</th>
+                                        <th>Amount</th>
+                                        <th>Rate</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($moneySells as $moneySell1)
+                                    @foreach ($moneySell1 as $moneySell2)
+                                    <tr>
+                                        <td>{{ \Carbon\Carbon::instance($moneySell2->created_at)->toDateString() }}</td>
+                                        <td>{{ $moneySell2->from_currency }} -> {{ $moneySell2->to_currency }}</td>
+                                        <td>@if ($moneySell2->sold ==1)
+                                                Yes
+                                            @else
+                                                No
+                                            @endif</td>
+                                        <td>
+                                            {{ $moneySell2->moneybuy->account->user->first_name }}
+                                        </td>
+                                        <td>{{ $moneySell2->from_currency }}$ {{ $moneySell2->amount }}</td>
+                                        <td>{{ $moneySell2->rate }}</td>
+                                        <td>{{ $moneySell2->to_currency }}$ {{ round($moneySell2->amount * $moneySell2->rate, 2) }}</td>
+                                    </tr> 
+                                     @endforeach
+                                     @endforeach
+                                </tbody>
+                           </table>
+                        </Div>
                     </div>
                 </div>
             </div>

@@ -22,9 +22,9 @@ class SettingsController extends Controller
     public function getIndex()
     {
         $current_user = $this->user;
-        echo "<pre>";
-        print($current_user->id);
-        echo "</pre>";
+        //echo "<pre>";
+        //print($current_user->id);
+        //echo "</pre>";
         $this->args['current_user'] = $current_user;
         return view('settings.index', $this->args);
     }

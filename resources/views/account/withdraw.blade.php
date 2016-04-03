@@ -19,15 +19,16 @@
                                     <div class="form-group">
                                         <label for="currency" class="col-sm-4 control-label">Currency</label>
                                         <div class="col-sm-4">
-                                            <p class="form-control-static">{{ $account->currency }}</p>
+                                            <select class="form-control" id="is_primary" name="currency_code">
+                                                @foreach ($accounts as $currency)
+                                                    <option value="{{$currency->currency}}">{{$currency->currency}}-{{$currency->balance}}</option>
+                                                 @endforeach
+                                               
+                                            </select>
+                                           
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="balance" class="col-sm-4 control-label">Balance</label>
-                                        <div class="col-sm-4">
-                                            <p class="form-control-static">{{ $account->balance }}</p>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="form-group">
                                         <label for="amount" class="col-sm-4 control-label">Amount</label>
                                         <div class="col-sm-6">
@@ -54,10 +55,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($moneyBuys as $moneyBuy)
+                                        @foreach ($moneyBuys as $moneyBuy1)
+                                        @foreach ($moneyBuy1 as $moneyBuy)
                                             <td>{{ \Carbon\Carbon::instance($moneyBuy->created_at)->toDateTimeString() }}</td>
                                             <td>{{ $moneyBuy->moneySell->from_currency }}</td>
                                             <td>{{ $moneyBuy->moneySell->amount }}</td>
+                                        @endforeach
                                         @endforeach
                                     </tbody>
                                 </table>

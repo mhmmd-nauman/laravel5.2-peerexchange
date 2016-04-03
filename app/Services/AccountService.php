@@ -49,11 +49,15 @@ class AccountService
         return $transaction;
     }
 
-    public function withdraw(Account &$account, $amount)
+    public function withdraw($current_user,$currency, $amount)
     {
         $transaction = new Transaction();
-        DB::transaction(function() use ($account, $amount, $transaction) {
-
+        DB::transaction(function() use ($current_user,$currency, $amount, $transaction) {
+            $account1 = DB::table('accounts')
+                    ->where('currency', '=', $currency)
+                    ->where('user_id', '=', $current_user)
+                    ->first();
+            $account = Account::findOrFail($account1->id);
             if ($amount > $account->balance) {
                 throw new \Exception('Insufficient funds in account');
             }
