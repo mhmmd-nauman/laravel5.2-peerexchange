@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => 'http://localhost/peerexchange1/public/',
 
     /*
     |--------------------------------------------------------------------------
@@ -157,6 +157,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\AccountServiceProvider::class,
+        Kordy\Ticketit\TicketitServiceProvider::class,
 
     ],
 
